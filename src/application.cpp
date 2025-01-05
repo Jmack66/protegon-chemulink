@@ -106,6 +106,10 @@ public:
 	}
 
 	void Update() final {
+		if (game.input.KeyDown(Key::I)) {
+			TransitionScene("BlockMenu", "PlacementMenu");
+		}
+
 		for (Button b : buttons){
 			b.Draw();
 		}
@@ -161,35 +165,15 @@ public:
 
 class Simulink : public Scene {
 public:
-	Simulink() {
-		game.window.SetTitle("Simulink");
-		game.window.SetSize(resolution);
+    void Init() override {
 		game.scene.Load<BlockMenu>("BlockMenu");
 		game.scene.Load<PlacementMenu>("PlacementMenu");
-	}
-
-    void Init() override {
 		game.scene.AddActive("BlockMenu");
 	}
-
-    void Shutdown() override {
-		game.scene.RemoveActive("BlockMenu");
-		game.scene.RemoveActive("PlacementMenu");
-		//game.draw.SetTarget();
-	}
-
-
-	void Update() override {
-		if (game.input.KeyDown(Key::I)) {
-			TransitionScene("BlockMenu", "PlacementMenu");
-		}
-
-	}
-
 };
 
 int main(int c, char** v) {
-	game.Init();
+	game.Init("Simulink", resolution, color::White);
 	game.scene.LoadActive<Simulink>("Simulink");
 	return 0;
 }
