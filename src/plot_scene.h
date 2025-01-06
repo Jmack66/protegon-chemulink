@@ -43,15 +43,17 @@ class PlotScene : public Scene {
 	x_axis_unit x_axis_length{ 10.0f };
 
 	void Init() {
-		game.renderer.SetClearColor(color::LightPink);
+		game.renderer.SetClearColor(color::White);
 		plot.Init({ 0, -250 }, { 10, 250 });
 		plot.Load("temperature");
 		plot.Load("acceleration");
 
+		plot.AddProperty<BackgroundColor>(BackgroundColor{ color::Gray });
 		plot.Get("temperature").GetProperty<LineColor>()  = color::Red;
 		plot.Get("acceleration").GetProperty<LineColor>() = color::Blue;
 
 		PlotLegend legend;
+		legend.background_color		  = color::LightGray;
 		legend.button_texture_default = Texture{ "resources/ui/tick_box_default.png" };
 		legend.button_texture_hover	  = Texture{ "resources/ui/tick_box_hover.png" };
 		legend.button_texture_toggled = Texture{ "resources/ui/tick_box_toggled.png" };
