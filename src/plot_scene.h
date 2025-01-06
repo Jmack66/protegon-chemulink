@@ -57,8 +57,21 @@ class PlotScene : public Scene {
 		legend.button_texture_default = Texture{ "resources/ui/tick_box_default.png" };
 		legend.button_texture_hover	  = Texture{ "resources/ui/tick_box_hover.png" };
 		legend.button_texture_toggled = Texture{ "resources/ui/tick_box_toggled.png" };
+		// legend.origin				  = Origin::CenterBottom;
 
 		plot.AddProperty<PlotLegend>(legend);
+
+		HorizontalAxis haxis;
+		// Only whole numbers on the horizontal axis.
+		haxis.division_number_precision = 0;
+		haxis.divisions					= 10;
+		// haxis.regular_align				= false;
+
+		VerticalAxis vaxis;
+		// vaxis.regular_align = false;
+
+		plot.AddProperty<HorizontalAxis>(haxis);
+		plot.AddProperty<VerticalAxis>(vaxis);
 
 		plot.Get("temperature").data.points.emplace_back(0.0f, temperature.GetValue());
 		plot.Get("acceleration").data.points.emplace_back(0.0f, acceleration.GetValue());
@@ -73,13 +86,17 @@ class PlotScene : public Scene {
 					clock.Elapsed<x_axis_unit>().count(), temperature.GetValue()
 				);
 		}
+
 		if (acceleration.HasNewValue()) {
 			plot.Get("acceleration")
 				.data.points.emplace_back(
 					clock.Elapsed<x_axis_unit>().count(), acceleration.GetValue()
 				);
 		}
+
+		// Comment this to stop following the data along the x axis.
 		plot.FollowXData();
+
 		plot.Draw({ game.window.GetCenter(), { 500, 500 }, Origin::Center });
 	}
 };
