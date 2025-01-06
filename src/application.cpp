@@ -58,6 +58,7 @@ public:
 		Button b;
 		b.Set<ButtonProperty::Toggleable>(true);
 		b.Set<ButtonProperty::BackgroundColor>(color::White);
+		b.Set<ButtonProperty::Radius>(15.0f);
 		b.Set<ButtonProperty::BackgroundColor>(color::DarkBlue, ButtonState::Hover);
 		b.Set<ButtonProperty::Text>(Text{ name, color::Gray });
 		b.Set<ButtonProperty::OnActivate>([=]() { PTGN_LOG("Pressed button: ", name); });
